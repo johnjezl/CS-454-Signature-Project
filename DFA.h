@@ -106,7 +106,7 @@ public:
             const std::string& b,
             const std::unordered_set<char>& alphabet);
 
-    DFA* build_automaton();
+    void build_automaton();
     void printDFA(){
         builtDFA->printDFA();
     }
@@ -122,7 +122,7 @@ private:
     void buildTransitionsFromStates();
     void handle_fail_cases();      // Adjust internal strings if needed
     bool validate_strings() const;    // Check for common prefixes
-
+    void add_absorbing_states() const;
     static std::unordered_set<std::string> inputs_to_set(const std::vector<std::string>& inputs);
 
     bool has_common_prefix() const;

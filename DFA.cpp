@@ -9,31 +9,38 @@ GameDFA::GameDFA(const std::string &a, const std::string &b, const std::unordere
     strB = b;
     this->alphabet = alphabet;
     build_automaton();
+
 }
 
-DFA* GameDFA::build_automaton() {
+void GameDFA::build_automaton() {
     DFA* inDFA = new DFA();
     builtDFA = inDFA;
-    validate_strings();
+    if(validate_strings()){
+        std::cerr << "ERR: Equivalent Prefixing\n";
+        return;
+    }
     initial_build();
+    add_absorbing_states();
     handle_fail_cases();
-    return builtDFA;
 }
 
 bool GameDFA::validate_strings() const {
-    return (!this->has_common_prefix());
+    return (this->has_common_prefix());
 }
 
 void GameDFA::handle_fail_cases() {
     std::string prefixCutter = "";
     for(auto i : builtDFA->states){
-        for(auto j : alphabet){
-            if(builtDFA->delta(i.id, j) == -1){
-                prefixCutter = i.label.substr(1) + j;
-                while(builtDFA->state_lookup.find(prefixCutter) == builtDFA->state_lookup.end() && prefixCutter != ""){
-                    prefixCutter.erase(0,1);
+        if(!i.absorbing) {
+            for (auto j: alphabet) {
+                if (builtDFA->delta(i.id, j) == -1) {
+                    prefixCutter = i.label.substr(1) + j;
+                    while (builtDFA->state_lookup.find(prefixCutter) == builtDFA->state_lookup.end() &&
+                           prefixCutter != "") {
+                        prefixCutter.erase(0, 1);
+                    }
+                    builtDFA->add_transition(i.label, j, prefixCutter);
                 }
-                builtDFA->add_transition(i.label, j, prefixCutter);
             }
         }
     }
@@ -85,5 +92,11 @@ void GameDFA::buildTransitionsFromStates() {
             builtDFA->add_transition(fromString, toString.back() ,toString);
         }
         while(!fromString.empty());
+    }
+}
+
+void GameDFA::add_absorbing_states() const {
+    for(auto i : {strA, strB}){
+        builtDFA->states.at(builtDFA->state_lookup.at(i)).absorbing = true;
     }
 }
