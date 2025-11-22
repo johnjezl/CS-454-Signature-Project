@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include "DFA.h"
+#include "RecurrenceEquationBuilder.h"
 int main() {
     std::cout << "Hello World!";
     std::string A, B;
@@ -14,6 +15,14 @@ int main() {
     for(auto i : A+B){
         Alpha.insert(i);
     }
+
+
+    std::cout << "\n==== TEST DFA and RecurrenceEquationBuilder Together ====\n";
     GameDFA DFA = GameDFA(A, B, Alpha);
-        DFA.printDFA();
-}
+    DFA.printDFA();
+
+//    GameDFA game("00", "12", {'0', '1', '2'});
+    GameDFA game("00", "11", {'0', '1'});
+    RecurrenceEquationBuilder builder(&game);
+
+   }

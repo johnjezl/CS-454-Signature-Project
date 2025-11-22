@@ -110,6 +110,20 @@ public:
     void printDFA(){
         builtDFA->printDFA();
     }
+    DFA* getDFA() const {
+        return builtDFA;
+    }
+
+    std::string getStringA() const {
+        return strA;
+    }
+
+    std::string getStringB() const {
+        return strB;
+    }
+    std::unordered_set<char> getAlphabet() const {
+        return alphabet;
+    }
 
 private:
     std::string strA;
