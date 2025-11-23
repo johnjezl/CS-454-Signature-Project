@@ -9,7 +9,6 @@ GameDFA::GameDFA(const std::string &a, const std::string &b, const std::unordere
     strB = b;
     this->alphabet = alphabet;
     build_automaton();
-
 }
 
 void GameDFA::build_automaton() {
@@ -34,7 +33,10 @@ void GameDFA::handle_fail_cases() {
         if(!i.absorbing) {
             for (auto j: alphabet) {
                 if (builtDFA->delta(i.id, j) == -1) {
-                    prefixCutter = i.label.substr(1) + j;
+                    if(i.label.size() >= 1)
+                        prefixCutter = i.label.substr(1) + j;
+                    else
+                        prefixCutter = j;
                     while (builtDFA->state_lookup.find(prefixCutter) == builtDFA->state_lookup.end() &&
                            prefixCutter != "") {
                         prefixCutter.erase(0, 1);
