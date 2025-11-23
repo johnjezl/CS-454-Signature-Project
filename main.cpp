@@ -23,14 +23,14 @@ int main() {
     std::cout << "\n==== TEST DFA and RecurrenceEquationBuilder Together ====\n";
     GameDFA DFA = GameDFA(A, B, Alpha);
     DFA.printDFA();
-//    RecurrenceEquationBuilder builder1(&DFA);
-//
-////    GameDFA game("00", "12", {'0', '1', '2'});
-//    GameDFA game("00", "11", {'0', '1'});
-//    RecurrenceEquationBuilder builder(&game);
-//
-//
-//    std::cout << "For DFA, the probability of A winning with " << DFA.getStringA() << " is " << getProbabilityOfWin(DFA.getStartState(), builder1);
-//    std::cout << "\nFor game, the probability of B winning with " << DFA.getStringB() << " is " << getProbabilityOfWin(game.getStartState(), builder);
+    RecurrenceEquationBuilder builder1(&DFA);
+
+//    GameDFA game("00", "12", {'0', '1', '2'});
+    GameDFA game("00", "11", {'0', '1'});
+    RecurrenceEquationBuilder builder(&game);
+
+
+    std::cout << "For DFA, the probability of A winning with " << DFA.getStringA() << " is " << getProbabilityOfWin(DFA.getStartState(), builder1);
+    std::cout << "\nFor game, the probability of B winning with " << DFA.getStringB() << " is " << getProbabilityOfWin(game.getStartState(), builder);
 
 }
