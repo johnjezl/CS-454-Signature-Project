@@ -125,6 +125,10 @@ public:
         return alphabet;
     }
 
+    int getStartState() const {
+        return builtDFA->state_lookup.at("");
+    }
+
 private:
     std::string strA;
     std::string strB;
