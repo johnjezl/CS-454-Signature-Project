@@ -16,7 +16,8 @@ add_executable(${PROJECT_NAME} ${SOURCES}
         RecurrenceEquationBuilder.cpp
         RecurrenceEquationBuilder.h
         RecurrenceEquationSolver.h
-        RecurrenceEquationSolver.cpp)
+        RecurrenceEquationSolver.cpp
+        Rational.h)
 
 # Add include directories
 target_include_directories(${PROJECT_NAME}

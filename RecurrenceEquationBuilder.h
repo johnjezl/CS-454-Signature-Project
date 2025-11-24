@@ -4,6 +4,7 @@
 #include <map>
 #include <tuple>
 #include <cmath>
+#include "Rational.h"
 
 class RecurrenceEquationBuilder {
 private:
@@ -13,34 +14,34 @@ private:
     std::unordered_set<char> alphabet;
     std::string strA;
     std::string strB;
-    
+
     int num_states;
     std::map<int, int> state_to_index;
-    std::vector<std::tuple<int, int, double>> coefficients;
-    std::vector<double> constants;
-    
+    std::vector<std::tuple<int, int, Rational>> coefficients;
+    std::vector<Rational> constants;
+
     void initialize_system();
     void generate_recurrences();
     void generate_equation_for_state(int state_id);
     void apply_boundary_conditions();
-    
+
 public:
     RecurrenceEquationBuilder(GameDFA* game);
-    
+
     void build_system();
-    
-    std::vector<std::tuple<int, int, double>> get_coefficients() const {
+
+    std::vector<std::tuple<int, int, Rational>> get_coefficients() const {
         return coefficients;
     }
-    
-    std::vector<double> get_constants() const {
+
+    std::vector<Rational> get_constants() const {
         return constants;
     }
-    
+
     int get_num_equations() const {
         return num_states;
     }
-    
+
     std::map<int, int> get_state_mapping() const {
         return state_to_index;
     }
