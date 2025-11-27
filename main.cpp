@@ -56,17 +56,30 @@ int main() {
 
 
     int alphabetSize;
-    std::cout << "Enter the size of the alphabet: ";
+    std::cout << "Enter the size of the alphabet (32 or less): ";
     std::cin >> alphabetSize;
+
+    //calculate min alphabet size with given strings
+    std::unordered_set<char> uniqueLetters;
+    for (auto i : stringA+stringB) {
+        if (uniqueLetters.count(i) == 0) {
+            uniqueLetters.insert(i);
+        }
+    }
+    int minSize = uniqueLetters.size();
+
+    if (minSize > 32) {
+        throw std::runtime_error("Cannot create an alphabet 32 or less with the given strings.");
+    }
 
     //validate the alphabet size
     while (true) {
 
-        if (alphabetSize < stringA.size() + stringB.size()) {
-            std::cout << "The alphabet size must be greater or equal to " << stringA.size() + stringB.size() << std::endl;
+        if (alphabetSize < minSize) {
+            std::cout << "The alphabet size must be greater or equal to " << minSize << std::endl;
         }
-        else if (alphabetSize > 256) {
-            std::cout << "The alphabet size must be less than 256\n" << std::endl;
+        else if (alphabetSize > 32) {
+            std::cout << "The alphabet size must be less than or equal to 32\n" << std::endl;
         }
         else {
             break;
@@ -111,7 +124,7 @@ std::unordered_set<char> setUpAlphabet(const std::string& stringA, const std::st
     //std::cout << "After adding a and b strings to alpha, need this many more chars in alphabet: " << numberOfAlphabetCharsNeeded << std::endl;
 
     //fill out the rest of the alphabet with chars (it doesn't matter what they are)
-    char alphaCharToAdd = 'NUL';
+    char alphaCharToAdd = '!';
     while (numberOfAlphabetCharsNeeded != 0) {
 
         //if that char is not already in the alphabet, add it
