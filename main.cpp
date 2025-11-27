@@ -8,6 +8,8 @@
 #include <bitset>
 
 std::unordered_set<char> setUpAlphabet(const std::string& stringA, const std::string& stringB, int alphabetSize);
+void testDFAs ();
+void testAllAlphabetSizes(std::string stringA, std::string stringB);
 
 int main() {
 
@@ -81,7 +83,12 @@ int main() {
     RecurrenceEquationBuilder builder1(&test1);
     std::cout << "\nFor 'test1', the probability of A winning with " << test1.getStringA() << " is " << getProbabilityOfWin(test1.getStartState(), builder1) << std::endl;
 
+
     //test1.printDFA();
+
+    //testDFAs();
+
+    //testAllAlphabetSizes("01", "2");
 
 }
 
@@ -118,4 +125,62 @@ std::unordered_set<char> setUpAlphabet(const std::string& stringA, const std::st
     }
 
     return alphabet;
+}
+
+
+
+//gives probabilities for a few DFAs and loops through all possible alphabet sizes for each one
+void testDFAs () {
+
+    //format - stringA, stringB, alphabetSize
+    //test0 - 00, 11, 2     (should be 1/2 for all sizes)
+    //test1 - 12345, f, 6
+    //test2 - 01, 1, 5      (should be 1/5 for size 5)
+    //test3 - 01, 2, 5      (should be 1/6 for size 5)
+    //test4 - abc, z, 6
+    std::vector<std::string> stringA = {"00", "12345", "01", "01", "abc"};
+    std::vector<std::string> stringB = {"11", "f", "1", "2", "z"};
+    std::vector<int> alphabetSize = {2, 6, 5, 5, 6};
+
+    //loop through each test case
+    for (int i = 0; i < stringA.size(); i++) {
+        std::cout << "\n\n********************************** Test " << i << " **********************************" << std::endl;
+
+        //test out all possible alphabet sizes for that case
+        for (int alphaSize = alphabetSize[i]; alphaSize <= 32; alphaSize++) {
+            std::unordered_set<char> alphabet = setUpAlphabet(stringA[i], stringB[i], alphaSize);
+            GameDFA test1 = GameDFA(stringA[i], stringB[i], alphabet);
+            RecurrenceEquationBuilder builder1(&test1);
+            std::cout << "\nFor A = " << stringA[i] << ", B = " << stringB[i] << ", with alphabet size " << alphaSize <<
+                ", the probability of A winning is " << getProbabilityOfWin(test1.getStartState(), builder1) << std::endl;
+
+        }
+
+    }
+
+}
+
+
+
+//outputs probability of A winning for all possible alphabet sizes up to 32
+void testAllAlphabetSizes(std::string stringA, std::string stringB) {
+
+    //find out minimum alphabet size for this case
+    std::unordered_set<char> uniqueLetters;
+    for (auto i : stringA+stringB) {
+        if (uniqueLetters.count(i) == 0) {
+            uniqueLetters.insert(i);
+        }
+    }
+    int currentAlphabetSize = uniqueLetters.size();
+
+    //test out all possible alphabet sizes for this case
+    for (currentAlphabetSize; currentAlphabetSize <= 32; currentAlphabetSize++) {
+        std::unordered_set<char> alphabet = setUpAlphabet(stringA, stringB, currentAlphabetSize);
+        GameDFA test1 = GameDFA(stringA, stringB, alphabet);
+        RecurrenceEquationBuilder builder1(&test1);
+        std::cout << "\nFor A = " << stringA << ", B = " << stringB << ", with alphabet size " << currentAlphabetSize <<
+            ", the probability of A winning is " << getProbabilityOfWin(test1.getStartState(), builder1) << std::endl;
+
+    }
 }
