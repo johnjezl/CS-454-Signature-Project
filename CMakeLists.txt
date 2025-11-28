@@ -22,5 +22,6 @@ add_executable(${PROJECT_NAME} ${SOURCES}
 # Add include directories
 target_include_directories(${PROJECT_NAME}
         PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
 

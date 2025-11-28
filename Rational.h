@@ -2,26 +2,59 @@
 // Created by Student on 11/23/25.
 //
 #pragma once
-#include <numeric>
 #include <stdexcept>
 #include <iostream>
+#include <boost/multiprecision/cpp_int.hpp>
 
 //Created by ChatGPT
 
-struct Rational {
-    long long num; // numerator
-    long long den; // denominator > 0
+// Big integer type from Boost
+using BigInt = boost::multiprecision::cpp_int;
 
+// Euclidean gcd for BigInt
+inline BigInt big_gcd(BigInt a, BigInt b) {
+    if (a < 0) a = -a;
+    if (b < 0) b = -b;
+    while (b != 0) {
+        BigInt r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+
+
+struct Rational {
+    BigInt num; // numerator
+    BigInt den; // denominator > 0
+
+    // Construct from normal integers
     Rational(long long n = 0, long long d = 1) : num(n), den(d) {
         if (den == 0) throw std::runtime_error("Zero denominator");
         normalize();
     }
 
-    //simplifies fraction
+    // Optional: construct directly from BigInt
+    Rational(const BigInt& n, const BigInt& d = 1) : num(n), den(d) {
+        if (den == 0) throw std::runtime_error("Zero denominator");
+        normalize();
+    }
+
+    // Simplify fraction
     void normalize() {
         if (den < 0) { den = -den; num = -num; }
-        long long g = std::gcd(num, den);
-        if (g != 0) { num /= g; den /= g; }
+
+        if (num == 0) {  // canonical zero
+            den = 1;
+            return;
+        }
+
+        BigInt g = big_gcd(num, den);
+        if (g != 0) {
+            num /= g;
+            den /= g;
+        }
     }
 };
 

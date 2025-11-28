@@ -102,6 +102,8 @@ int main() {
     //testDFAs();
 
     //testAllAlphabetSizes("01", "2");
+    //testAllAlphabetSizes("0123456789qwertyuiop[]asdfzxcvb", "m");   //A has 31 letters and shares none with B
+    //testAllAlphabetSizes("0123456789qwertyuiop[]asdfzxcvbm", "m");  //A has 32 letters and shares 1 with B
 
 }
 
