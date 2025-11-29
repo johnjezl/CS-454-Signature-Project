@@ -4,7 +4,15 @@
 #include "RecurrenceEquationSolver.h"
 
 
-//outputs the solution to the equation for the start state (probability of A winning)
+
+/*
+outputs the solution to the equation for the start state (probability of A winning)
+input:
+    start_state - the start state of the GameDFA
+    builder - the builder that contains the recurrence equations
+output:
+    the probability that player A will win the game in form of a Rational
+*/
 Rational getProbabilityOfWin(int start_state, RecurrenceEquationBuilder builder) {
 
     //make a matrix of the coefficients and initially fill all spots with 0.
@@ -111,7 +119,14 @@ std::vector<Rational> solveLinearSystem( const std::vector<std::vector<Rational>
 
 
 
-//tests the solver with 4 systems of equations with known answers
+
+/*
+tests the solver with 4 systems of equations with known answers
+input:
+    none
+output:
+    prints answers to four hard coded linear systems
+*/
 void testLinearSystemSolver() {
 
     std::cout << "\n========Testing some systems of equations========\n";

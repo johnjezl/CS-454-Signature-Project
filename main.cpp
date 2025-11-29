@@ -1,4 +1,4 @@
-"""
+/*
 ## Project 2: Problem 6: Probability of Winning in a String-Avoidance Game
 
 Team: John Jezl, Angelica Rohrs, William Dappen
@@ -15,8 +15,8 @@ Angelica developed the RecurrenceEquationSolver class, which solves the system o
 William implemented the DFA and GameDFA classes, which represents the deterministic finite automaton (DFA) for the game based on the input strings and alphabet.
 
 ### Disclosures/Transparency:
-AI was used to create unit and integration tests, and to refine some of the matrix math functions.
-"""
+AI was used to create unit and integration tests and the Rational type, and to refine some of the matrix math functions.
+*/
 #include <iostream>
 #include "DFA.h"
 #include "RecurrenceEquationBuilder.h"
@@ -111,7 +111,7 @@ int main() {
     try {
         GameDFA test1(stringA, stringB, alphabet);
         RecurrenceEquationBuilder builder1(&test1);
-        std::cout << "\nFor 'test1', the probability of A winning with "
+        std::cout << "\nThe probability of A winning with "
                   << test1.getStringA() << " is "
                   << getProbabilityOfWin(test1.getStartState(), builder1) << std::endl;
     } catch (const std::runtime_error& e) {
@@ -123,6 +123,15 @@ int main() {
 
 
 
+/*
+sets up the alphabet for a given alphabet size and two player strings
+input:
+    stringA - the string for player A
+    stringB - the string for player B
+    alphabetSize - the size the alphabet should be
+output:
+    an unordered set of unique chars of size 'alphabetSize' with all chars from 'stringA' and 'stringB', along with random chars to fill out the rest
+*/
 std::unordered_set<char> setUpAlphabet(const std::string& stringA, const std::string& stringB, int alphabetSize) {
 
     std::unordered_set<char> alphabet;
@@ -157,7 +166,15 @@ std::unordered_set<char> setUpAlphabet(const std::string& stringA, const std::st
 
 
 
-//gives probabilities for a few DFAs and loops through all possible alphabet sizes for each one
+
+
+/*
+for testing, gives probabilities for a few DFAs and loops through all possible alphabet sizes for each one
+input:
+    none
+output:
+    the probability of player A winning for each DFA is printed to the screen for all possible alphabet sizes
+*/
 void testDFAs () {
 
     //format - stringA, stringB, alphabetSize
@@ -190,7 +207,15 @@ void testDFAs () {
 
 
 
-//outputs probability of A winning for all possible alphabet sizes up to 32
+
+/*
+for testing, outputs probability of A winning for all possible alphabet sizes up to 32
+input:
+    stringA - the string for player A
+    stringB - the string for player B
+output:
+    the probability of player A winning with 'stringA' is printed to the screen for all possible alphabet sizes
+*/
 void testAllAlphabetSizes(std::string stringA, std::string stringB) {
 
     //find out minimum alphabet size for this case

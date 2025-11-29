@@ -6,7 +6,7 @@
 #include <iostream>
 #include <boost/multiprecision/cpp_int.hpp>
 
-//Created by ChatGPT
+//The code in this file was created by ChatGPT
 
 // Big integer type from Boost
 using BigInt = boost::multiprecision::cpp_int;
