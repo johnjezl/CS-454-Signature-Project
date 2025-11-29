@@ -24,7 +24,7 @@ Rational getProbabilityOfWin(int start_state, RecurrenceEquationBuilder builder)
     std::vector<Rational> solutions = solveLinearSystem(matrix, constants);
 
     //output the solution gotten from the equation corresponding to start state
-    return solutions[start_state];
+    return solutions[builder.get_state_mapping().at(start_state)];
 
 }
 
