@@ -15,8 +15,7 @@ void GameDFA::build_automaton() {
     DFA* inDFA = new DFA();
     builtDFA = inDFA;
     if(validate_strings()){
-        std::cerr << "ERR: Equivalent Prefixing\n";
-        return;
+        throw std::runtime_error("ERR: Equivalent Prefixing - strings cannot share a common first character");
     }
     initial_build();
     add_absorbing_states();

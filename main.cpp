@@ -91,20 +91,16 @@ int main() {
     }
 
     std::unordered_set<char> alphabet = setUpAlphabet(stringA, stringB, alphabetSize);
-
-    GameDFA test1 = GameDFA(stringA, stringB, alphabet);
-    RecurrenceEquationBuilder builder1(&test1);
-    std::cout << "\nFor 'test1', the probability of A winning with " << test1.getStringA() << " is " << getProbabilityOfWin(test1.getStartState(), builder1) << std::endl;
-
-
-    //test1.printDFA();
-
-    //testDFAs();
-
-    //testAllAlphabetSizes("01", "2");
-    //testAllAlphabetSizes("0123456789qwertyuiop[]asdfzxcvb", "m");   //A has 31 letters and shares none with B
-    //testAllAlphabetSizes("0123456789qwertyuiop[]asdfzxcvbm", "m");  //A has 32 letters and shares 1 with B
-
+    
+    GameDFA *test1;
+    try {
+         test1 = new GameDFA(stringA, stringB, alphabet);
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Error creating DFA: " << e.what() << std::endl;
+        return 1;
+    }
+    RecurrenceEquationBuilder builder1(test1);
+    std::cout << "\nFor 'test1', the probability of A winning with " << test1->getStringA() << " is " << getProbabilityOfWin(test1->getStartState(), builder1) << std::endl;
 }
 
 
@@ -158,7 +154,7 @@ void testDFAs () {
     std::vector<int> alphabetSize = {2, 6, 5, 5, 6};
 
     //loop through each test case
-    for (int i = 0; i < stringA.size(); i++) {
+    for (size_t i = 0; i < stringA.size(); i++) {
         std::cout << "\n\n********************************** Test " << i << " **********************************" << std::endl;
 
         //test out all possible alphabet sizes for that case
@@ -187,10 +183,9 @@ void testAllAlphabetSizes(std::string stringA, std::string stringB) {
             uniqueLetters.insert(i);
         }
     }
-    int currentAlphabetSize = uniqueLetters.size();
 
     //test out all possible alphabet sizes for this case
-    for (currentAlphabetSize; currentAlphabetSize <= 32; currentAlphabetSize++) {
+    for (int currentAlphabetSize = uniqueLetters.size(); currentAlphabetSize <= 32; currentAlphabetSize++) {
         std::unordered_set<char> alphabet = setUpAlphabet(stringA, stringB, currentAlphabetSize);
         GameDFA test1 = GameDFA(stringA, stringB, alphabet);
         RecurrenceEquationBuilder builder1(&test1);
