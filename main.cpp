@@ -91,16 +91,17 @@ int main() {
     }
 
     std::unordered_set<char> alphabet = setUpAlphabet(stringA, stringB, alphabetSize);
-    
-    GameDFA *test1;
+
     try {
-         test1 = new GameDFA(stringA, stringB, alphabet);
+        GameDFA test1(stringA, stringB, alphabet);
+        RecurrenceEquationBuilder builder1(&test1);
+        std::cout << "\nFor 'test1', the probability of A winning with "
+                  << test1.getStringA() << " is "
+                  << getProbabilityOfWin(test1.getStartState(), builder1) << std::endl;
     } catch (const std::runtime_error& e) {
-        std::cerr << "Error creating DFA: " << e.what() << std::endl;
+        std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
-    RecurrenceEquationBuilder builder1(test1);
-    std::cout << "\nFor 'test1', the probability of A winning with " << test1->getStringA() << " is " << getProbabilityOfWin(test1->getStartState(), builder1) << std::endl;
 }
 
 
